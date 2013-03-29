@@ -19,7 +19,7 @@ public class Rooms extends JPanel{
 		roomPanel = new JPanel();
 		this.add(roomPanel);
 		setSize(300,250);
-		roomPanel.setLayout(new GridLayout(5,2));
+		roomPanel.setLayout(new GridLayout(5,2,40,20));
 		this.setBorder(new TitledBorder(new EtchedBorder(), "Rooms"));
 		//Check Boxes
 		kitchen = new JCheckBox("Kitchen");

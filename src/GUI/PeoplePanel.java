@@ -18,12 +18,12 @@ public class PeoplePanel extends JPanel {
 	public PeoplePanel() {
 		
 		
-		people = new JPanel();
-		people.setLayout(new GridLayout(3,2));
+		people = new JPanel();		
 		people.setSize(new Dimension(300,250));
+		people.setLayout(new GridLayout(3,2,25,50));
 		setSize(new Dimension(300, 250));
 		this.setBorder(new TitledBorder(new EtchedBorder(), "People"));
-		this.add(people, BorderLayout.SOUTH);
+		this.add(people, BorderLayout.CENTER);
 		
 		
 		scarletBox = new JCheckBox("Miss Scarlet");

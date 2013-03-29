@@ -19,7 +19,7 @@ public class Weapons extends JPanel {
 		weaponPanel = new JPanel();
 		this.add(weaponPanel);
 		setSize(300, 250);
-		weaponPanel.setLayout(new GridLayout(3,2));
+		weaponPanel.setLayout(new GridLayout(3,2,30,50));
 		this.setBorder(new TitledBorder(new EtchedBorder(), "Weapons"));
 		//Check boxes
 		candleStick = new JCheckBox("Candlestick");
