@@ -1,6 +1,9 @@
 package clueBoard;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Field;
@@ -12,6 +15,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
+import GUI.DetectiveNotes;
 
 public class ClueGame extends JFrame{
 	private ArrayList<ComputerPlayer> computer;
@@ -23,15 +32,47 @@ public class ClueGame extends JFrame{
 	private Player currentPlayer;
 	private String playerFile;
 	private String cardFile;
-
+	private JPanel Board;
+	private JMenuBar menu;
+	private JMenu menuName;
+	private JMenuItem detectiveNotes, exit;
+	private DetectiveNotes notesWindow;
+	
 	public ClueGame() {
+		notesWindow = new DetectiveNotes();
 		computer = new ArrayList<ComputerPlayer>();
 		cards = new ArrayList<Card>();
 		fullDeck = new ArrayList<Card>();
 		human = new HumanPlayer();
 		setPlayerFile("Players.txt");
 		setCardFile("Cards.txt");
+		loadConfigFiles();
+		//GUI 
+		Board = new JPanel();
+		this.add(Board, BorderLayout.CENTER);
+		setSize(600,1000);
+		menu = new JMenuBar();
+		
+		menuName = new JMenu("File");
+		detectiveNotes = new JMenuItem("Show Detective notes");
+		exit = new JMenuItem("Exit");
+		detectiveNotes.addActionListener(new detectiveListener());
+		exit.addActionListener(new exitListener());
+		menuName.add(detectiveNotes);
+		menuName.add(exit);
+		menu.add(menuName);
+		this.setJMenuBar(menu);
 		//drawBoard();
+	}
+	private class exitListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+	}
+	private class detectiveListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			notesWindow.setVisible(true);
+		}
 	}
 	
 	public void deal(){
@@ -258,14 +299,17 @@ public class ClueGame extends JFrame{
 	}
 
 	public void drawBoard(Board board){
-		//Control Panel and Current Cards
 		//board = BoardLayout.Center
 		
 		//Control Panel South
 		//Current Cards East
 	}
 	
-	
+	public static void main(String[] args) {
+		ClueGame mainPannel = new ClueGame();
+		mainPannel.setVisible(true);
+		
+	}
 	
 	
 	//Getters and Setters for tests
