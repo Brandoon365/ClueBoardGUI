@@ -1,5 +1,6 @@
 package clueBoard;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class RoomCell extends BoardCell {
@@ -8,6 +9,7 @@ public class RoomCell extends BoardCell {
 
 	DoorDirection doorDirection;
 	private char roomInitial, secondInitial;
+	private boolean printsRoom;
 	
 	
 	/******************************************************************************************************************
@@ -26,6 +28,7 @@ public class RoomCell extends BoardCell {
 		
 		//store the first character as the room initial
 		roomInitial = id.charAt(0);
+		this.printsRoom = false;
 		
 		//if the room is a door, assign the appropriate value to the enum based on the second character of the id
 		if (id.length() == 2) {
@@ -42,6 +45,10 @@ public class RoomCell extends BoardCell {
 				break;
 			case 'D':
 				doorDirection = DoorDirection.DOWN;
+				break;
+			case 'N':
+				doorDirection = DoorDirection.NONE;
+				this.printsRoom = true;
 				break;
 			default :
 				doorDirection = DoorDirection.NONE;
@@ -93,6 +100,11 @@ public class RoomCell extends BoardCell {
 		return false;
 	}
 	
+	//return printsRoom
+	public boolean getPrintsRoom() {
+		return this.printsRoom;
+	}
+	
 	/******************************************************************************************************************
 	 * getSecondInitial() - returns the secondInitial of the initial id with which the cell was created
 	 *****************************************************************************************************************/
@@ -100,9 +112,41 @@ public class RoomCell extends BoardCell {
 		return secondInitial;
 	}
 	
-	
+	//Draw Room Cell
 	@Override
-	public void draw(Graphics g, Board board) {
+	public void draw(Graphics g, Board board, int width, int height) {
+		int leftCoord = this.getCellColumn()*width;
+		int topCoord = this.getCellRow()*height;
+		g.setColor(Color.gray);
+		g.fillRect(leftCoord, topCoord, width, height);
 		
+		//prints room name if printsRoom is true
+		if(this.getPrintsRoom()) {
+			String room = board.getRooms().get(this.getRoomInitial());
+			g.setColor(Color.black);
+			g.drawString(room, leftCoord, topCoord);
+		}
+		
+		//if cell has a door, draw a blue line to indicate direction
+		if(this.isDoorway()) {
+			DoorDirection door = this.getDoorDirection();
+			g.setColor(Color.blue);
+			switch(door) {
+			case DOWN:
+				g.drawLine(leftCoord, topCoord + height, leftCoord + width, topCoord + height);
+				break;
+			case UP:
+				g.drawLine(leftCoord, topCoord, leftCoord + width, topCoord);
+				break;
+			case LEFT:
+				g.drawLine(leftCoord, topCoord, leftCoord, topCoord + height);
+				break;
+			case RIGHT:
+				g.drawLine(leftCoord + width, topCoord, leftCoord + width, topCoord + height);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }

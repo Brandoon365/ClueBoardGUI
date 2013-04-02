@@ -36,6 +36,7 @@ public class Board extends JPanel {
 	 * 			- boardFile and legendFile are hard-coded for inilization
 	 *****************************************************************************************************************/
 	public Board() {
+		setSize(600,800);
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character, String>();
 		boardFile = "ClueLayout.csv";
@@ -44,6 +45,7 @@ public class Board extends JPanel {
 		targets = new HashSet<BoardCell>();
 		adjMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		visited = new ArrayList<Boolean>();
+		loadConfigFiles();
 	}
 
 	/******************************************************************************************************************
@@ -53,6 +55,7 @@ public class Board extends JPanel {
 	 * 												- boardFile and legendFile are initialized with the parameters
 	 *****************************************************************************************************************/
 	public Board(String boardFile, String legendFile) {
+		setSize(600,800);
 		this.boardFile = boardFile;
 		this.legendFile = legendFile;
 		cells = new ArrayList<BoardCell>();
@@ -61,6 +64,7 @@ public class Board extends JPanel {
 		targets = new HashSet<BoardCell>();
 		adjMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		visited = new ArrayList<Boolean>();
+		loadConfigFiles();
 	}
 
 	
@@ -464,8 +468,15 @@ public class Board extends JPanel {
 		}
 	}
 	
-	public void paintComponents(Graphics g){
-		
+	//Draw each cell of the board
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		int width = this.getWidth()/this.getNumColumns();
+		int height = this.getHeight()/this.getNumRows();
+		for(BoardCell cell : this.getCells()) {
+			cell.draw(g, this, width, height);
+		}
 	}
 
 	/******************************************************************************************************************

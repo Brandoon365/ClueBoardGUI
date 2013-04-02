@@ -50,5 +50,5 @@ public abstract class BoardCell {
 	
 	
 	
-	abstract void draw(Graphics g, Board board);
+	abstract void draw(Graphics g, Board board, int width, int height);
 }
