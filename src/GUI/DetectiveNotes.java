@@ -4,10 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class DetectiveNotes extends JFrame {
+public class DetectiveNotes extends JDialog {
 	private PeoplePanel people;
 	private PersonGuessPanel personGuess;
 	
@@ -31,7 +32,7 @@ public class DetectiveNotes extends JFrame {
 		
 		setSize(new Dimension(600, 750));
 		setTitle("Detective Notes");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 		this.setLayout(new GridLayout(3,1));
 		
 		people = new PeoplePanel();
