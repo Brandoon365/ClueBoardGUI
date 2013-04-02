@@ -1,6 +1,7 @@
 package clueBoard;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -38,12 +39,12 @@ public class Board extends JPanel {
 	 * 			- boardFile and legendFile are hard-coded for inilization
 	 *****************************************************************************************************************/
 	public Board() {
-		setSize(600,600);
+		setPreferredSize(new Dimension(800,600));
 		setPlayers(new ArrayList<Player>());
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character, String>();
-		boardFile = "ClueLayout.csv";
-		legendFile = "ClueLegend.txt";
+		boardFile = "ClueBoard.cfg";
+		legendFile = "legend.cfg";
 		grid = new ArrayList<Integer>();
 		targets = new HashSet<BoardCell>();
 		adjMatrix = new HashMap<Integer, LinkedList<Integer>>();

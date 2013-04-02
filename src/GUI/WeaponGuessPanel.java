@@ -16,13 +16,14 @@ public class WeaponGuessPanel extends JPanel{
 	private JComboBox createWeaponGuess(){
 		weaponGuess = new JComboBox();
 		weaponGuess.setPreferredSize(new Dimension(100,175));
+		weaponGuess.addItem("Not sure");
 		weaponGuess.addItem("Candlestick");
 		weaponGuess.addItem("Lead Pipe");
 		weaponGuess.addItem("Knife");
 		weaponGuess.addItem("Revolver");
 		weaponGuess.addItem("Wrench");
 		weaponGuess.addItem("Rope");
-		weaponGuess.addItem("Not sure");
+		
 		return weaponGuess;
 	}
 	public WeaponGuessPanel(){

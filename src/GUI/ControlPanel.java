@@ -25,7 +25,8 @@ public class ControlPanel extends JPanel{
 
 	public ControlPanel(){
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(600, 200));
+		setSize(new Dimension(400,100));
+		setPreferredSize(new Dimension(300, 100));
 		turn = new JLabel("Whose Turn?");
 		dice = new JLabel("Roll");
 		guess = new JLabel("Guess");

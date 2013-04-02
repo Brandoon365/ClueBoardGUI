@@ -1,6 +1,7 @@
 package clueBoard;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,11 +43,13 @@ public class ClueGame extends JFrame{
 	private ControlPanel controlPanel;
 	
 	public ClueGame() {
-		setSize(600,800);
+		setSize(new Dimension(800,800));
 		notesWindow = new DetectiveNotes();
 		
-		controlPanel = new ControlPanel();
-		this.add(controlPanel, BorderLayout.SOUTH);
+		controlPanel = new ControlPanel();	
+		controlPanel.setSize(new Dimension(this.getWidth(), 100));
+		controlPanel.setPreferredSize(new Dimension(this.getWidth(), 100));
+
 		
 		computer = new ArrayList<ComputerPlayer>();
 		cards = new ArrayList<Card>();
@@ -65,6 +68,7 @@ public class ClueGame extends JFrame{
 		Board = new Board();
 		Board.setPlayers(players);
 		this.add(Board, BorderLayout.CENTER);
+		this.add(controlPanel, BorderLayout.SOUTH);
 		setTitle("Clue");
 		menu = new JMenuBar();
 		
