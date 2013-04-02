@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -15,7 +16,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 
-public class ControlPanel extends JFrame{
+public class ControlPanel extends JPanel{
 	private JPanel turnPanel, dicePanel, guessPanel, responsePanel, topPanel, botPanel;
 	private JButton nextPlayer, accusation;
 	private JLabel turn, dice, guess, response, diceValue, guessValue, responseValue;
@@ -23,8 +24,8 @@ public class ControlPanel extends JFrame{
 	
 
 	public ControlPanel(){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(600, 200);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(new Dimension(600, 200));
 		turn = new JLabel("Whose Turn?");
 		dice = new JLabel("Roll");
 		guess = new JLabel("Guess");

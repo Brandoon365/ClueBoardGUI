@@ -20,9 +20,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import GUI.ControlPanel;
 import GUI.DetectiveNotes;
 
 public class ClueGame extends JFrame{
+	private ArrayList<Player> players;
 	private ArrayList<ComputerPlayer> computer;
 	private Solution answer;
 	private ArrayList<Card> cards;
@@ -32,25 +34,38 @@ public class ClueGame extends JFrame{
 	private Player currentPlayer;
 	private String playerFile;
 	private String cardFile;
-	private JPanel Board;
+	private Board Board;
 	private JMenuBar menu;
 	private JMenu menuName;
 	private JMenuItem detectiveNotes, exit;
 	private DetectiveNotes notesWindow;
+	private ControlPanel controlPanel;
 	
 	public ClueGame() {
+		setSize(600,800);
 		notesWindow = new DetectiveNotes();
+		
+		controlPanel = new ControlPanel();
+		this.add(controlPanel, BorderLayout.SOUTH);
+		
 		computer = new ArrayList<ComputerPlayer>();
 		cards = new ArrayList<Card>();
+		players = new ArrayList<Player>();
 		fullDeck = new ArrayList<Card>();
 		human = new HumanPlayer();
 		setPlayerFile("Players.txt");
 		setCardFile("Cards.txt");
 		loadConfigFiles();
+		
+		
+		for(ComputerPlayer c : computer)
+			players.add(c);
+		players.add(human);
 		//GUI 
-		Board = new JPanel();
+		Board = new Board();
+		Board.setPlayers(players);
 		this.add(Board, BorderLayout.CENTER);
-		setSize(600,1000);
+		setTitle("Clue");
 		menu = new JMenuBar();
 		
 		menuName = new JMenu("File");

@@ -19,10 +19,12 @@ public class WalkwayCell extends BoardCell {
 	public void draw(Graphics g, Board board, int width, int height) {
 		int leftCoord = this.getCellColumn()*width;
 		int topCoord = this.getCellRow()*height;
-		g.setColor(Color.yellow);
+
+		g.setColor(Color.orange);
 		g.fillRect(leftCoord, topCoord, width, height);
 		g.setColor(Color.black);
 		g.drawRect(leftCoord, topCoord, width, height);
+		
 		
 	}
 }

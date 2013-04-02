@@ -117,7 +117,7 @@ public class RoomCell extends BoardCell {
 	public void draw(Graphics g, Board board, int width, int height) {
 		int leftCoord = this.getCellColumn()*width;
 		int topCoord = this.getCellRow()*height;
-		g.setColor(Color.gray);
+		g.setColor(Color.lightGray);
 		g.fillRect(leftCoord, topCoord, width, height);
 		
 		//prints room name if printsRoom is true
@@ -133,16 +133,16 @@ public class RoomCell extends BoardCell {
 			g.setColor(Color.blue);
 			switch(door) {
 			case DOWN:
-				g.drawLine(leftCoord, topCoord + height, leftCoord + width, topCoord + height);
+				g.fillRect(leftCoord, topCoord + height - 2, width, 2);
 				break;
 			case UP:
-				g.drawLine(leftCoord, topCoord, leftCoord + width, topCoord);
+				g.fillRect(leftCoord, topCoord, width, 2);
 				break;
 			case LEFT:
-				g.drawLine(leftCoord, topCoord, leftCoord, topCoord + height);
+				g.fillRect(leftCoord, topCoord, 2, height);
 				break;
 			case RIGHT:
-				g.drawLine(leftCoord + width, topCoord, leftCoord + width, topCoord + height);
+				g.fillRect(leftCoord + width - 2, topCoord, 2, height);
 				break;
 			default:
 				break;

@@ -1,5 +1,6 @@
 package clueBoard;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -28,6 +29,7 @@ public class Board extends JPanel {
 	private HashSet<BoardCell> targets;
 	private ArrayList<Integer> grid;
 	private ArrayList<Boolean> visited;
+	private ArrayList<Player> players;
 
 	
 	/******************************************************************************************************************
@@ -36,7 +38,8 @@ public class Board extends JPanel {
 	 * 			- boardFile and legendFile are hard-coded for inilization
 	 *****************************************************************************************************************/
 	public Board() {
-		setSize(600,800);
+		setSize(600,600);
+		setPlayers(new ArrayList<Player>());
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character, String>();
 		boardFile = "ClueLayout.csv";
@@ -143,7 +146,8 @@ public class Board extends JPanel {
 						fileLineSplit[i].charAt(0) == 'B' || fileLineSplit[i].charAt(0) == 'R' ||
 						fileLineSplit[i].charAt(0) == 'L' || fileLineSplit[i].charAt(0) == 'S' || 
 						fileLineSplit[i].charAt(0) == 'D' || fileLineSplit[i].charAt(0) == 'O' ||
-						fileLineSplit[i].charAt(0) =='H' || fileLineSplit[i].charAt(0) == 'X') {
+						fileLineSplit[i].charAt(0) =='H' || fileLineSplit[i].charAt(0) == 'X' ||
+						fileLineSplit[i].charAt(0) == 'N') {
 					tempCell = new RoomCell(fileLineSplit[i]);
 					tempCell.setIndex(indexCount);
 					cells.add(tempCell);
@@ -171,8 +175,9 @@ public class Board extends JPanel {
             for(int col = 0; col < numColumns;col++){
                 cells.get(indexTracker).setCellRow(row);
                 cells.get(indexTracker).setCellColumn(col);
+                indexTracker++;
             }
-            indexTracker++;
+            
 		}
 		
 		//Populates the the visited list to be false for all cells
@@ -468,16 +473,33 @@ public class Board extends JPanel {
 		}
 	}
 	
-	//Draw each cell of the board
+	//Draw each cell of the board and the players
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		int width = this.getWidth()/this.getNumColumns();
 		int height = this.getHeight()/this.getNumRows();
+		
 		for(BoardCell cell : this.getCells()) {
 			cell.draw(g, this, width, height);
 		}
+		
+		for(Player p : this.getPlayers()) {
+			g.setColor(p.getColor());
+			int radius = 0;
+			if(width > height)
+				radius = height;
+			else
+				radius = width;
+			int centerX = (int) p.getLocation().getX()*width;
+			int centerY = (int) p.getLocation().getY()*height;
+			g.fillOval(centerX, centerY, width, height);
+			g.setColor(Color.black);
+			g.drawOval(centerX, centerY, width, height);
+		}
 	}
+	
+	
 
 	/******************************************************************************************************************
 	 * getTargets() - returns the targets HashSet
@@ -505,6 +527,14 @@ public class Board extends JPanel {
 	 *****************************************************************************************************************/
 	public LinkedList<Integer> getAdjList(int index) {
 		return adjMatrix.get(index);
+	}
+
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
 	}
 
 }

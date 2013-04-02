@@ -35,7 +35,7 @@ public class GameSetupTests {
 		board.calcAdjacencies();
 		//set up test game
 		game = new ClueGame();
-		game.loadConfigFiles();
+		//game.loadConfigFiles();
 		game.selectAnswer();
 		game.deal();
 		
