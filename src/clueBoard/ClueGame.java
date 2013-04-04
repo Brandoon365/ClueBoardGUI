@@ -19,8 +19,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import GUI.CardPanel;
 import GUI.ControlPanel;
 import GUI.DetectiveNotes;
 
@@ -41,11 +43,12 @@ public class ClueGame extends JFrame{
 	private JMenuItem detectiveNotes, exit;
 	private DetectiveNotes notesWindow;
 	private ControlPanel controlPanel;
+	private CardPanel cardPanel;
 	
 	public ClueGame() {
 		setSize(new Dimension(800,800));
 		notesWindow = new DetectiveNotes();
-		
+		cardPanel = new CardPanel();
 		controlPanel = new ControlPanel();	
 		controlPanel.setSize(new Dimension(this.getWidth(), 100));
 		controlPanel.setPreferredSize(new Dimension(this.getWidth(), 100));
@@ -56,19 +59,26 @@ public class ClueGame extends JFrame{
 		players = new ArrayList<Player>();
 		fullDeck = new ArrayList<Card>();
 		human = new HumanPlayer();
+		
 		setPlayerFile("Players.txt");
 		setCardFile("Cards.txt");
 		loadConfigFiles();
-		
-		
+		currentPlayer = human;
+		players.add(human);
 		for(ComputerPlayer c : computer)
 			players.add(c);
-		players.add(human);
+		deal();
+
+		cardPanel.setRoomName(human.getCards().get(0).getCard());
+		cardPanel.setWeaponName(human.getCards().get(1).getCard());
+		cardPanel.setPersonName(human.getCards().get(2).getCard());
+		
 		//GUI 
 		Board = new Board();
 		Board.setPlayers(players);
 		this.add(Board, BorderLayout.CENTER);
 		this.add(controlPanel, BorderLayout.SOUTH);
+		this.add(cardPanel, BorderLayout.EAST);
 		setTitle("Clue");
 		menu = new JMenuBar();
 		
@@ -81,7 +91,7 @@ public class ClueGame extends JFrame{
 		menuName.add(exit);
 		menu.add(menuName);
 		this.setJMenuBar(menu);
-		//drawBoard();
+		JOptionPane.showMessageDialog(this, "You are " + human.getName() + ". Press OK to continue.");
 	}
 	private class exitListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
@@ -96,37 +106,66 @@ public class ClueGame extends JFrame{
 	
 	public void deal(){
 		selectAnswer();
+		ArrayList<Card> rooms = new ArrayList<Card>();
+		ArrayList<Card> weapons = new ArrayList<Card>();
+		ArrayList<Card> people = new ArrayList<Card>();
+		for(Card c : cards) {
+			if(c.getType() == Card.cardType.ROOM) 
+				rooms.add(c);
+			else if(c.getType() == Card.cardType.WEAPON) 
+				weapons.add(c);
+			else
+				people.add(c);
+		}
+		Random roller = new Random();
+		
+		//Deal one of each card type to player
+		int cardIndex = roller.nextInt(rooms.size());
+		human.acceptCard(rooms.get(cardIndex));
+		cards.remove(rooms.get(cardIndex));
+		cardIndex = roller.nextInt(weapons.size());
+		human.acceptCard(weapons.get(cardIndex));
+		cards.remove(weapons.get(cardIndex));
+		cardIndex = roller.nextInt(people.size());
+		human.acceptCard(people.get(cardIndex));
+		cards.remove(people.get(cardIndex));
+		
+		//deal remaining to computers
 		int dealt = 0;
 		while(!cards.isEmpty()) {
-			int index = dealt % 6;
+			int index = dealt % 5;
 			Player dealtTo = null;
 			Card toBeDealt;
 			switch(index) {
 			case 0:
-				dealtTo = human;
-				break;
-			case 1:
 				dealtTo = computer.get(0);
 				break;
-			case 2:
+			case 1:
 				dealtTo = computer.get(1);
 				break;
-			case 3:
+			case 2:
 				dealtTo = computer.get(2);
 				break;
-			case 4:
+			case 3:
 				dealtTo = computer.get(3);
 				break;
-			case 5:
+			case 4:
 				dealtTo = computer.get(4);
 				break;
 			}
-			Random roller = new Random();
-			int cardIndex = roller.nextInt(cards.size());
-			toBeDealt = cards.get(cardIndex);
-			dealtTo.acceptCard(toBeDealt);
-			cards.remove(cardIndex);
-			dealt++;
+			if(cards.size() > 1) {
+				cardIndex = roller.nextInt(cards.size());
+				toBeDealt = cards.get(cardIndex);
+				dealtTo.acceptCard(toBeDealt);
+				cards.remove(cardIndex);
+				dealt++;
+			}
+			else {
+				toBeDealt = cards.get(0);
+				dealtTo.acceptCard(toBeDealt);
+				cards.remove(0);
+				dealt++;
+			}
 		}
 	}
 	
@@ -313,6 +352,7 @@ public class ClueGame extends JFrame{
 				toAdd = new Card(name, type);
 				this.cards.add(toAdd);
 				this.fullDeck.add(toAdd);
+				
 			}
 		}
 	}

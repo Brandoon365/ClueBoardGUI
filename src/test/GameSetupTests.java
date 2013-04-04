@@ -36,7 +36,7 @@ public class GameSetupTests {
 		//set up test game
 		game = new ClueGame();
 		//game.loadConfigFiles();
-		game.selectAnswer();
+		//game.selectAnswer();
 		game.deal();
 		
 		

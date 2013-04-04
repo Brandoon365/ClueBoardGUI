@@ -9,9 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class CardPanel extends JFrame {
+public class CardPanel extends JPanel {
 	private JPanel people, room, weapon, card,frame;
 	private JLabel peopleCard, roomCard, weaponCard, myCard;
+	private String weaponName, personName, roomName;
 	
 	public CardPanel(){
 		setSize(new Dimension(100,800));
@@ -27,11 +28,11 @@ public class CardPanel extends JFrame {
 		myCard = new JLabel("My cards");
 		card.add(myCard);
 		peopleCard.setBorder(new EtchedBorder());
-		peopleCard.setText(" text  ");
+		peopleCard.setText(personName);
 		roomCard.setBorder(new EtchedBorder());
-		roomCard.setText(" text  ");
+		roomCard.setText(roomName);
 		weaponCard.setBorder(new EtchedBorder());
-		weaponCard.setText(" text  ");
+		weaponCard.setText(weaponName);
 		people.add(peopleCard);
 		room.add(roomCard);
 		weapon.add(weaponCard);
@@ -45,6 +46,24 @@ public class CardPanel extends JFrame {
 	}
 	
 	
+	public void setWeaponName(String weaponName) {
+		this.weaponName = weaponName;
+		weaponCard.setText(weaponName);
+	}
+
+
+	public void setPersonName(String personName) {
+		this.personName = personName;
+		peopleCard.setText(personName);
+	}
+
+
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+		roomCard.setText(roomName);
+	}
+
+
 	public static void main(String[] args) {
 		CardPanel newPannel = new CardPanel();
 		newPannel.setVisible(true);

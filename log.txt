@@ -1,1 +1,1 @@
-Board contains cell with invalid initial.
+Row 1 of legend file does not contain exactly two items.
