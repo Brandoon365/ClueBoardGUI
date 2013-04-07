@@ -358,6 +358,12 @@ public class ClueGame extends JFrame{
 			}
 		}
 	}
+	
+	public static int roll(){
+		Random rand = new Random();
+		return (rand.nextInt(6)+1);
+		
+	}
 
 	public static void nextPlayer() {
 		if(currentPlayerIndex == 5)

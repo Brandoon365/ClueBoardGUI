@@ -92,10 +92,15 @@ public class ControlPanel extends JPanel{
 					ClueGame.setCurrentPlayerIndex(ClueGame.getCurrentPlayerIndex() + 1);
 				setCurrentPlayer(ClueGame.getPlayers().get(ClueGame.getCurrentPlayerIndex()).getName());
 				ClueGame.setCurrentPlayer(ClueGame.getPlayers().get(ClueGame.getCurrentPlayerIndex()));
+				setRoll(ClueGame.roll());
 			}
 			
 		}
 		
+	}
+	
+	public void setRoll(int roll){
+		this.diceValue.setText(Integer.toString(roll));
 	}
 	
 	public void setCurrentPlayer(String name) {

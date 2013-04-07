@@ -45,7 +45,6 @@ public class CardPanel extends JPanel {
 		this.add(weapon);
 	}
 	
-	
 	public void setWeaponName(String weaponName) {
 		this.weaponName = weaponName;
 		weaponCard.setText(weaponName);
