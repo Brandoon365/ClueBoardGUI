@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,12 +17,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import clueBoard.ClueGame;
+
 
 public class ControlPanel extends JPanel{
 	private JPanel turnPanel, dicePanel, guessPanel, responsePanel, topPanel, botPanel;
 	private JButton nextPlayer, accusation;
-	private JLabel turn, dice, guess, response, diceValue, guessValue, responseValue;
-	private JTextField turnValue;
+	private JLabel turn, turnValue, dice, guess, response, diceValue, guessValue, responseValue;
+	
 	
 
 	public ControlPanel(){
@@ -32,11 +36,12 @@ public class ControlPanel extends JPanel{
 		guess = new JLabel("Guess");
 		response = new JLabel("Response");
 		nextPlayer = new JButton("Next player");
+		nextPlayer.addActionListener(new ButtonListener());
 		accusation = new JButton("Make an acusation");
 		diceValue = new JLabel();
 		guessValue = new JLabel();
 		responseValue = new JLabel();
-		turnValue = new JTextField(15);
+		turnValue = new JLabel();
 		dicePanel = new JPanel();
 		guessPanel = new JPanel();
 		responsePanel = new JPanel();
@@ -49,7 +54,7 @@ public class ControlPanel extends JPanel{
 		botPanel.setLayout(new GridLayout(1,3));
 		turnPanel.add(turn);
 		turnPanel.add(turnValue);
-		turnValue.setBorder(new EtchedBorder());
+		turnValue.setBorder(new TitledBorder(new EtchedBorder()));
 		topPanel.add(turnPanel);
 		topPanel.add(nextPlayer);
 		topPanel.add(accusation);
@@ -75,6 +80,28 @@ public class ControlPanel extends JPanel{
 		responseValue.setBorder(new EtchedBorder());
 		botPanel.add(responsePanel);
 	}
+	
+	private class ButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == nextPlayer) {
+				if(ClueGame.getCurrentPlayerIndex() == 5)
+					ClueGame.setCurrentPlayerIndex(0);
+				else
+					ClueGame.setCurrentPlayerIndex(ClueGame.getCurrentPlayerIndex() + 1);
+				setCurrentPlayer(ClueGame.getPlayers().get(ClueGame.getCurrentPlayerIndex()).getName());
+				ClueGame.setCurrentPlayer(ClueGame.getPlayers().get(ClueGame.getCurrentPlayerIndex()));
+			}
+			
+		}
+		
+	}
+	
+	public void setCurrentPlayer(String name) {
+		turnValue.setText(name);
+	}
+	
 	public static void main(String[] args) {
 		ControlPanel newPannel = new ControlPanel();
 		newPannel.setVisible(true);

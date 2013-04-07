@@ -27,14 +27,15 @@ import GUI.ControlPanel;
 import GUI.DetectiveNotes;
 
 public class ClueGame extends JFrame{
-	private ArrayList<Player> players;
+	public static ArrayList<Player> players;
 	private ArrayList<ComputerPlayer> computer;
 	private Solution answer;
 	private ArrayList<Card> cards;
 	private static ArrayList<Card> fullDeck;
 	private HumanPlayer human;
 	private boolean turn;
-	private Player currentPlayer;
+	private static Player currentPlayer;
+	public static int currentPlayerIndex = 0;
 	private String playerFile;
 	private String cardFile;
 	private Board Board;
@@ -78,6 +79,7 @@ public class ClueGame extends JFrame{
 		Board.setPlayers(players);
 		this.add(Board, BorderLayout.CENTER);
 		this.add(controlPanel, BorderLayout.SOUTH);
+		this.controlPanel.setCurrentPlayer(players.get(currentPlayerIndex).getName());
 		this.add(cardPanel, BorderLayout.EAST);
 		setTitle("Clue");
 		menu = new JMenuBar();
@@ -357,11 +359,11 @@ public class ClueGame extends JFrame{
 		}
 	}
 
-	public void drawBoard(Board board){
-		//board = BoardLayout.Center
-		
-		//Control Panel South
-		//Current Cards East
+	public static void nextPlayer() {
+		if(currentPlayerIndex == 5)
+			currentPlayerIndex = 0;
+		else
+			currentPlayerIndex++;
 	}
 	
 	public static void main(String[] args) {
@@ -405,8 +407,8 @@ public class ClueGame extends JFrame{
 		return currentPlayer;
 	}
 
-	public void setCurrentPlayer(Player currentPlayer) {
-		this.currentPlayer = currentPlayer;
+	public static void setCurrentPlayer(Player currentPlayer) {
+		ClueGame.currentPlayer = currentPlayer;
 	}
 
 	public String getPlayerFile() {
@@ -424,4 +426,17 @@ public class ClueGame extends JFrame{
 	public void setCardFile(String cardFile) {
 		this.cardFile = cardFile;
 	}
+	
+	public static int getCurrentPlayerIndex() {
+		return currentPlayerIndex;
+	}
+
+	public static void setCurrentPlayerIndex(int currentPlayerIndex) {
+		ClueGame.currentPlayerIndex = currentPlayerIndex;
+	}
+	
+	public static ArrayList<Player> getPlayers() {
+		return players;
+	}
+
 }
