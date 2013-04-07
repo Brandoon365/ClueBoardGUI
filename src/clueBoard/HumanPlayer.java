@@ -1,4 +1,7 @@
 package clueBoard;
+
+import java.util.Set;
+
 //Naomi and Brandon
 public class HumanPlayer extends Player{
 
@@ -12,5 +15,12 @@ public class HumanPlayer extends Player{
 	
 	public void updateSeen(Card seen){
 		this.seen.add(seen);
+	}
+
+	@Override
+	void makeMove(Set<BoardCell> targets, Board board) {
+		board.setHumanTurn(true);
+		board.repaint();
+		
 	}
 }

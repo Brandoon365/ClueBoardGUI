@@ -27,15 +27,15 @@ import GUI.ControlPanel;
 import GUI.DetectiveNotes;
 
 public class ClueGame extends JFrame{
-	public static ArrayList<Player> players;
+	public ArrayList<Player> players;
 	private ArrayList<ComputerPlayer> computer;
 	private Solution answer;
 	private ArrayList<Card> cards;
 	private static ArrayList<Card> fullDeck;
 	private HumanPlayer human;
 	private boolean turn;
-	private static Player currentPlayer;
-	public static int currentPlayerIndex = 0;
+	private Player currentPlayer;
+	public int currentPlayerIndex = 0;
 	private String playerFile;
 	private String cardFile;
 	private Board Board;
@@ -45,12 +45,13 @@ public class ClueGame extends JFrame{
 	private DetectiveNotes notesWindow;
 	private ControlPanel controlPanel;
 	private CardPanel cardPanel;
+	public boolean turnDone;
 	
 	public ClueGame() {
 		setSize(new Dimension(800,800));
 		notesWindow = new DetectiveNotes();
 		cardPanel = new CardPanel();
-		controlPanel = new ControlPanel();	
+		controlPanel = new ControlPanel(this);	
 		controlPanel.setSize(new Dimension(this.getWidth(), 100));
 		controlPanel.setPreferredSize(new Dimension(this.getWidth(), 100));
 
@@ -94,6 +95,9 @@ public class ClueGame extends JFrame{
 		menu.add(menuName);
 		this.setJMenuBar(menu);
 		JOptionPane.showMessageDialog(this, "You are " + human.getName() + ". Press OK to continue.");
+		int roll = roll();
+		controlPanel.setRoll(roll);
+		takeTurn(roll);
 	}
 	private class exitListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
@@ -104,6 +108,23 @@ public class ClueGame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			notesWindow.setVisible(true);
 		}
+	}
+	
+	
+	public void takeTurn(int roll) {
+		//calculate targets
+		Board.calcTargets(currentPlayer.getLocation().y, currentPlayer.getLocation().x, roll);
+		//take human turn
+		if(currentPlayer == human) {
+			this.setTurnDone(false);
+			currentPlayer.makeMove(Board.getTargets(), Board);
+			this.setTurnDone(true);
+		}
+		//take computer turn
+		else {
+			currentPlayer.makeMove(Board.getTargets(), Board);
+		}
+		//Board.setHumanTurn(false);
 	}
 	
 	public void deal(){
@@ -365,7 +386,7 @@ public class ClueGame extends JFrame{
 		
 	}
 
-	public static void nextPlayer() {
+	public void nextPlayer() {
 		if(currentPlayerIndex == 5)
 			currentPlayerIndex = 0;
 		else
@@ -413,8 +434,8 @@ public class ClueGame extends JFrame{
 		return currentPlayer;
 	}
 
-	public static void setCurrentPlayer(Player currentPlayer) {
-		ClueGame.currentPlayer = currentPlayer;
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
 	public String getPlayerFile() {
@@ -433,16 +454,24 @@ public class ClueGame extends JFrame{
 		this.cardFile = cardFile;
 	}
 	
-	public static int getCurrentPlayerIndex() {
+	public int getCurrentPlayerIndex() {
 		return currentPlayerIndex;
 	}
 
-	public static void setCurrentPlayerIndex(int currentPlayerIndex) {
-		ClueGame.currentPlayerIndex = currentPlayerIndex;
+	public void setCurrentPlayerIndex(int currentPlayerIndex) {
+		this.currentPlayerIndex = currentPlayerIndex;
 	}
 	
-	public static ArrayList<Player> getPlayers() {
+	public ArrayList<Player> getPlayers() {
 		return players;
+	}
+
+	public boolean isTurnDone() {
+		return turnDone;
+	}
+
+	public void setTurnDone(boolean turnDone) {
+		this.turnDone = turnDone;
 	}
 
 }

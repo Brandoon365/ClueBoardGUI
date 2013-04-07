@@ -2,8 +2,9 @@ package clueBoard;
 //Naomi and Brandon
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
-public class Player {
+public abstract class Player {
 	private String name;
 	public static ArrayList<Card> seen = new ArrayList<Card>();
 	private ArrayList<Card> cards = new ArrayList<Card>();
@@ -53,6 +54,8 @@ public class Player {
 		cards.add(card);
 		seen.add(card);
 	}
+	
+	abstract void makeMove(Set<BoardCell> targets, Board board);
 
 	
 	//Setters and getters for tests

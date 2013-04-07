@@ -3,6 +3,9 @@ package clueBoard;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import clueBoard.RoomCell.DoorDirection;
@@ -31,14 +35,16 @@ public class Board extends JPanel {
 	private ArrayList<Integer> grid;
 	private ArrayList<Boolean> visited;
 	private ArrayList<Player> players;
+	private boolean humanTurn;
 
-	
+
 	/******************************************************************************************************************
 	 * Board() 	- default constructor. Initializes:
 	 * 				cells, rooms, boardFile, legendFile, grid, targets, adjMatrix, visited, and doorIndeces
 	 * 			- boardFile and legendFile are hard-coded for inilization
 	 *****************************************************************************************************************/
 	public Board() {
+		humanTurn = true;
 		setPreferredSize(new Dimension(800,600));
 		setPlayers(new ArrayList<Player>());
 		cells = new ArrayList<BoardCell>();
@@ -71,6 +77,64 @@ public class Board extends JPanel {
 		loadConfigFiles();
 	}
 
+	public void checkLocation(Point location) {
+		if(humanTurn) {
+			int width = this.getWidth()/this.numColumns;
+			int height = this.getHeight()/this.numRows;
+			int column = (int) location.getX()/width;
+			int row = (int) location.getY()/height;
+			boolean validLocation = false;
+			for(BoardCell c : this.getTargets()) {
+				if(row == c.getCellRow() && column == c.getCellColumn()) {
+					validLocation = true;
+				}
+			}
+			if(validLocation) {
+
+			}
+			else {
+				JOptionPane.showMessageDialog(null,"That is not a valid location.", "That is not a valid location.", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
+	
+	//mouse listener
+	private class BoardListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			Point location = e.getPoint();
+			checkLocation(location);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	
 	
 	/******************************************************************************************************************
 	 * loadConfigFiles() 	- calls loadBoardConfigFile() and loadLegendConfigFile()
@@ -485,6 +549,18 @@ public class Board extends JPanel {
 			cell.draw(g, this, width, height);
 		}
 		
+		if(humanTurn) {
+			for(BoardCell c : this.getTargets()) {
+				int leftCoord = c.getCellColumn()*width;
+				int topCoord = c.getCellRow()*height;
+				g.setColor(Color.cyan);
+				g.fillRect(leftCoord, topCoord, width, height);
+				g.setColor(Color.black);
+				g.drawRect(leftCoord, topCoord, width, height);
+			}
+		}
+			
+		
 		for(Player p : this.getPlayers()) {
 			g.setColor(p.getColor());
 			int radius = 0;
@@ -505,7 +581,7 @@ public class Board extends JPanel {
 	/******************************************************************************************************************
 	 * getTargets() - returns the targets HashSet
 	 *****************************************************************************************************************/
-	public HashSet getTargets() {
+	public HashSet<BoardCell> getTargets() {
 		return targets;
 	}
 	
@@ -536,6 +612,10 @@ public class Board extends JPanel {
 
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
+	}
+
+	public void setHumanTurn(boolean humanTurn) {
+		this.humanTurn = humanTurn;
 	}
 
 }

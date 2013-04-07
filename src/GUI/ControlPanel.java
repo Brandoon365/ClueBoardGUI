@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -24,11 +25,12 @@ public class ControlPanel extends JPanel{
 	private JPanel turnPanel, dicePanel, guessPanel, responsePanel, topPanel, botPanel;
 	private JButton nextPlayer, accusation;
 	private JLabel turn, turnValue, dice, guess, response, diceValue, guessValue, responseValue;
-	
+	private ClueGame game;
 	
 
-	public ControlPanel(){
+	public ControlPanel(ClueGame game){
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.game = game;
 		setSize(new Dimension(400,100));
 		setPreferredSize(new Dimension(300, 100));
 		turn = new JLabel("Whose Turn?");
@@ -86,13 +88,21 @@ public class ControlPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == nextPlayer) {
-				if(ClueGame.getCurrentPlayerIndex() == 5)
-					ClueGame.setCurrentPlayerIndex(0);
-				else
-					ClueGame.setCurrentPlayerIndex(ClueGame.getCurrentPlayerIndex() + 1);
-				setCurrentPlayer(ClueGame.getPlayers().get(ClueGame.getCurrentPlayerIndex()).getName());
-				ClueGame.setCurrentPlayer(ClueGame.getPlayers().get(ClueGame.getCurrentPlayerIndex()));
-				setRoll(ClueGame.roll());
+				//if(game.turnDone) {
+					if(game.getCurrentPlayerIndex() == 5)
+						game.setCurrentPlayerIndex(0);
+					else
+						game.setCurrentPlayerIndex(game.getCurrentPlayerIndex() + 1);
+					setCurrentPlayer(game.getPlayers().get(game.getCurrentPlayerIndex()).getName());
+					game.setCurrentPlayer(game.getPlayers().get(game.getCurrentPlayerIndex()));
+					int roll = ClueGame.roll();
+					setRoll(roll);
+					game.setTurnDone(false);
+					game.takeTurn(roll);
+			/*	}
+				else {
+					JOptionPane.showMessageDialog(null,"Your turn is not done yet.", "Your turn is not done yet.", JOptionPane.ERROR_MESSAGE);
+				}*/
 			}
 			
 		}
@@ -108,8 +118,8 @@ public class ControlPanel extends JPanel{
 	}
 	
 	public static void main(String[] args) {
-		ControlPanel newPannel = new ControlPanel();
-		newPannel.setVisible(true);
+		//ControlPanel newPannel = new ControlPanel();
+		//newPannel.setVisible(true);
 	}
 
 }

@@ -1,5 +1,6 @@
 package clueBoard;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
@@ -135,5 +136,14 @@ public class ComputerPlayer extends Player{
 
 	public void setLastVistedRoom(char lastVistedRoom) {
 		this.lastVistedRoom = lastVistedRoom;
+	}
+
+	@Override
+	void makeMove(Set<BoardCell> targets, Board board) {
+		board.setHumanTurn(false);
+		BoardCell location = pickLocation(targets);
+		Point playerLocation = new Point(location.getCellColumn(),location.getCellRow());
+		setLocation(playerLocation);
+		board.repaint();
 	}
 }
