@@ -56,6 +56,7 @@ public class Board extends JPanel {
 		adjMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		visited = new ArrayList<Boolean>();
 		loadConfigFiles();
+		addMouseListener(new BoardListener());
 	}
 
 	/******************************************************************************************************************
@@ -75,28 +76,10 @@ public class Board extends JPanel {
 		adjMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		visited = new ArrayList<Boolean>();
 		loadConfigFiles();
+		addMouseListener(new BoardListener());
+
 	}
 
-	public void checkLocation(Point location) {
-		if(humanTurn) {
-			int width = this.getWidth()/this.numColumns;
-			int height = this.getHeight()/this.numRows;
-			int column = (int) location.getX()/width;
-			int row = (int) location.getY()/height;
-			boolean validLocation = false;
-			for(BoardCell c : this.getTargets()) {
-				if(row == c.getCellRow() && column == c.getCellColumn()) {
-					validLocation = true;
-				}
-			}
-			if(validLocation) {
-
-			}
-			else {
-				JOptionPane.showMessageDialog(null,"That is not a valid location.", "That is not a valid location.", JOptionPane.ERROR_MESSAGE);
-			}
-		}
-	}
 	
 	
 	//mouse listener
@@ -105,7 +88,7 @@ public class Board extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			Point location = e.getPoint();
-			checkLocation(location);
+			System.out.println(e.getX() + " " + e.getY());
 		}
 
 		@Override
