@@ -46,6 +46,25 @@ public class Board extends JPanel {
 	 * 				cells, rooms, boardFile, legendFile, grid, targets, adjMatrix, visited, and doorIndeces
 	 * 			- boardFile and legendFile are hard-coded for inilization
 	 *****************************************************************************************************************/
+	//test constructor
+	public Board() {
+		this.game = null;
+		humanTurn = true;
+		setPreferredSize(new Dimension(800,600));
+		setPlayers(new ArrayList<Player>());
+		cells = new ArrayList<BoardCell>();
+		rooms = new HashMap<Character, String>();
+		boardFile = "ClueBoard.cfg";
+		legendFile = "legend.cfg";
+		grid = new ArrayList<Integer>();
+		targets = new HashSet<BoardCell>();
+		adjMatrix = new HashMap<Integer, LinkedList<Integer>>();
+		visited = new ArrayList<Boolean>();
+		target = new Point();
+		loadConfigFiles();
+		addMouseListener(new BoardListener());
+	}
+	
 	public Board(ClueGame game) {
 		this.game = game;
 		humanTurn = true;
@@ -70,6 +89,25 @@ public class Board extends JPanel {
 	 * 													visited, and doorIndeces
 	 * 												- boardFile and legendFile are initialized with the parameters
 	 *****************************************************************************************************************/
+	//test constructor
+	public Board(String boardFile, String legendFile) {
+		this.game = null;
+		setSize(600,800);
+		this.boardFile = boardFile;
+		this.legendFile = legendFile;
+		cells = new ArrayList<BoardCell>();
+		rooms = new HashMap<Character, String>();
+		grid = new ArrayList<Integer>();
+		targets = new HashSet<BoardCell>();
+		adjMatrix = new HashMap<Integer, LinkedList<Integer>>();
+		visited = new ArrayList<Boolean>();
+		target = new Point();
+		loadConfigFiles();
+		addMouseListener(new BoardListener());
+
+	}
+	
+	
 	public Board(String boardFile, String legendFile, ClueGame game) {
 		this.game = game;
 		setSize(600,800);
