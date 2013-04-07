@@ -19,8 +19,9 @@ public class HumanPlayer extends Player{
 
 	@Override
 	void makeMove(Set<BoardCell> targets, Board board) {
-		board.setHumanTurn(true);
-		board.repaint();
-		
+			setLocation(board.target);
+			board.targetSelected = false;
+			board.repaint();		
 	}
+
 }

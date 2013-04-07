@@ -81,6 +81,7 @@ public class ControlPanel extends JPanel{
 		responsePanel.add(responseValue);
 		responseValue.setBorder(new EtchedBorder());
 		botPanel.add(responsePanel);
+
 	}
 	
 	private class ButtonListener implements ActionListener {
@@ -88,7 +89,7 @@ public class ControlPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == nextPlayer) {
-				//if(game.turnDone) {
+				if(game.turnDone) {
 					if(game.getCurrentPlayerIndex() == 5)
 						game.setCurrentPlayerIndex(0);
 					else
@@ -99,15 +100,14 @@ public class ControlPanel extends JPanel{
 					setRoll(roll);
 					game.setTurnDone(false);
 					game.takeTurn(roll);
-			/*	}
+				}
 				else {
 					JOptionPane.showMessageDialog(null,"Your turn is not done yet.", "Your turn is not done yet.", JOptionPane.ERROR_MESSAGE);
-				}*/
+				}
 			}
-			
 		}
-		
 	}
+		
 	
 	public void setRoll(int roll){
 		this.diceValue.setText(Integer.toString(roll));

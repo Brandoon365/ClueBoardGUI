@@ -48,6 +48,7 @@ public class ClueGame extends JFrame{
 	public boolean turnDone;
 	
 	public ClueGame() {
+		turnDone = true;
 		setSize(new Dimension(800,800));
 		notesWindow = new DetectiveNotes();
 		cardPanel = new CardPanel();
@@ -76,7 +77,7 @@ public class ClueGame extends JFrame{
 		cardPanel.setPersonName(human.getCards().get(2).getCard());
 		
 		//GUI 
-		Board = new Board();
+		Board = new Board(this);
 		Board.setPlayers(players);
 		this.add(Board, BorderLayout.CENTER);
 		this.add(controlPanel, BorderLayout.SOUTH);
@@ -95,9 +96,7 @@ public class ClueGame extends JFrame{
 		menu.add(menuName);
 		this.setJMenuBar(menu);
 		JOptionPane.showMessageDialog(this, "You are " + human.getName() + ". Press OK to continue.");
-		int roll = roll();
-		controlPanel.setRoll(roll);
-		takeTurn(roll);
+		
 	}
 	private class exitListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
@@ -117,11 +116,12 @@ public class ClueGame extends JFrame{
 		//take human turn
 		if(currentPlayer == human) {
 			this.setTurnDone(false);
-			currentPlayer.makeMove(Board.getTargets(), Board);
-			this.setTurnDone(true);
+			Board.setHumanTurn(true);
+			Board.repaint();
 		}
 		//take computer turn
 		else {
+			setTurnDone(true);
 			currentPlayer.makeMove(Board.getTargets(), Board);
 		}
 		//Board.setHumanTurn(false);
@@ -396,7 +396,9 @@ public class ClueGame extends JFrame{
 	public static void main(String[] args) {
 		ClueGame mainPannel = new ClueGame();
 		mainPannel.setVisible(true);
-		
+		int roll = mainPannel.roll();
+		mainPannel.controlPanel.setRoll(roll);
+		mainPannel.takeTurn(roll);
 	}
 	
 	

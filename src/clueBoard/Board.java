@@ -36,6 +36,9 @@ public class Board extends JPanel {
 	private ArrayList<Boolean> visited;
 	private ArrayList<Player> players;
 	private boolean humanTurn;
+	private ClueGame game;
+	public boolean targetSelected;
+	public Point target;
 
 
 	/******************************************************************************************************************
@@ -43,7 +46,8 @@ public class Board extends JPanel {
 	 * 				cells, rooms, boardFile, legendFile, grid, targets, adjMatrix, visited, and doorIndeces
 	 * 			- boardFile and legendFile are hard-coded for inilization
 	 *****************************************************************************************************************/
-	public Board() {
+	public Board(ClueGame game) {
+		this.game = game;
 		humanTurn = true;
 		setPreferredSize(new Dimension(800,600));
 		setPlayers(new ArrayList<Player>());
@@ -55,6 +59,7 @@ public class Board extends JPanel {
 		targets = new HashSet<BoardCell>();
 		adjMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		visited = new ArrayList<Boolean>();
+		target = new Point();
 		loadConfigFiles();
 		addMouseListener(new BoardListener());
 	}
@@ -65,7 +70,8 @@ public class Board extends JPanel {
 	 * 													visited, and doorIndeces
 	 * 												- boardFile and legendFile are initialized with the parameters
 	 *****************************************************************************************************************/
-	public Board(String boardFile, String legendFile) {
+	public Board(String boardFile, String legendFile, ClueGame game) {
+		this.game = game;
 		setSize(600,800);
 		this.boardFile = boardFile;
 		this.legendFile = legendFile;
@@ -75,12 +81,35 @@ public class Board extends JPanel {
 		targets = new HashSet<BoardCell>();
 		adjMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		visited = new ArrayList<Boolean>();
+		target = new Point();
 		loadConfigFiles();
 		addMouseListener(new BoardListener());
 
 	}
 
-	
+	public void checkLocation(Point location) {
+		if(humanTurn) {
+			int width = this.getWidth()/this.getNumColumns();
+			int height = this.getHeight()/this.getNumRows();
+			int row = (int) (location.getY()/height);
+			int column = (int) (location.getX()/width);
+			boolean validTarget = false;
+			for(BoardCell c : this.getTargets()) {
+				if(row == c.getCellRow() && column == c.getCellColumn())
+					validTarget = true;			
+			}
+			if(validTarget) {
+				target = new Point(column, row);
+				game.getHuman().setLocation(target);
+				humanTurn = false;
+				repaint();
+				game.setTurnDone(true);
+			}
+				
+			else
+				JOptionPane.showMessageDialog(null,"That is not a valid target.", "That is not a valid target.", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 	
 	//mouse listener
 	private class BoardListener implements MouseListener {
@@ -88,7 +117,7 @@ public class Board extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			Point location = e.getPoint();
-			System.out.println(e.getX() + " " + e.getY());
+			checkLocation(location);
 		}
 
 		@Override
