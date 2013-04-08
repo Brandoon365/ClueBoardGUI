@@ -41,8 +41,8 @@ public class ControlPanel extends JPanel{
 		response = new JLabel("Response");
 		nextPlayer = new JButton("Next player");
 		nextPlayer.addActionListener(new ButtonListener());
-		accusation = new JButton("Make an acusation");
-		accusation.addActionListener(new makeAccusationListener());
+		accusation = new JButton("Make an accusation");
+		accusation.addActionListener(new ButtonListener());
 		diceValue = new JLabel();
 		guessValue = new JLabel();
 		responseValue = new JLabel();
@@ -92,8 +92,8 @@ public class ControlPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == nextPlayer) {
-				if(game.turnDone) {
-					if(game.getCurrentPlayerIndex() == 5)
+				if(game.turnDone && !game.isGameDone()) {
+					if(game.getCurrentPlayerIndex() == game.getPlayers().size())
 						game.setCurrentPlayerIndex(0);
 					else
 						game.setCurrentPlayerIndex(game.getCurrentPlayerIndex() + 1);
@@ -108,17 +108,22 @@ public class ControlPanel extends JPanel{
 					JOptionPane.showMessageDialog(null,"Your turn is not done yet.", "Your turn is not done yet.", JOptionPane.ERROR_MESSAGE);
 				}
 			}
+			else if(e.getSource() == accusation) {
+				if(game.getCurrentPlayer() == game.getHuman() && game.getPlayers().contains(game.getHuman()) && !game.getHuman().isMadeAccusation()) {
+					accPanel = new AccusationPanel(game);
+					accPanel.setVisible(true);
+				}
+				else if(game.getPlayers().contains(game.getHuman())) {
+					JOptionPane.showMessageDialog(null,"You cannot make an accusation at this time.", "You cannot make an accusation at this time.", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"You are already out of the game.", "You are already out of the game.", JOptionPane.ERROR_MESSAGE);
+
+				}
+			}
 		}
 	}
 		
-	private class  makeAccusationListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			accPanel = new AccusationPanel();
-			accPanel.setVisible(true);
-		}
-	}
 	
 	
 	public void setRoll(int roll){

@@ -45,7 +45,7 @@ public class ClueGame extends JFrame{
 	private DetectiveNotes notesWindow;
 	private ControlPanel controlPanel;
 	private CardPanel cardPanel;
-	public boolean turnDone;
+	public boolean turnDone, gameDone;
 	
 	public ClueGame() {
 		turnDone = true;
@@ -107,6 +107,13 @@ public class ClueGame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			notesWindow.setVisible(true);
 		}
+	}
+	
+	public void showWinScreen() {
+		if(currentPlayer == human)
+			JOptionPane.showMessageDialog(this, "Congratulations, you win!");
+		else
+			JOptionPane.showMessageDialog(this, "Sorry, " + currentPlayer.getName() + " won the game.");
 	}
 	
 	
@@ -269,15 +276,9 @@ public class ClueGame extends JFrame{
 	}
 	
 	public boolean checkAccusation(Solution solution){
-		boolean correct = true;
-		if(solution.getPerson() != answer.getPerson()) {
-			correct = false;
-		}
-		else if(solution.getRoom() != answer.getRoom()) {
-			correct = false;
-		}
-		else if(solution.getWeapon() != answer.getWeapon()) {
-			correct = false;
+		boolean correct = false;
+		if(solution.getPerson().equals(answer.getPerson()) && solution.getRoom().equals(answer.getRoom()) && solution.getWeapon().equals(answer.getWeapon())) {
+			correct = true;
 		}
 		return correct;
 	}
@@ -474,6 +475,24 @@ public class ClueGame extends JFrame{
 
 	public void setTurnDone(boolean turnDone) {
 		this.turnDone = turnDone;
+	}
+
+	public boolean isGameDone() {
+		return gameDone;
+	}
+
+	public void setGameDone(boolean gameDone) {
+		this.gameDone = gameDone;
+	}
+
+
+	public Board getBoard() {
+		return Board;
+	}
+
+
+	public void setBoard(Board board) {
+		Board = board;
 	}
 
 }

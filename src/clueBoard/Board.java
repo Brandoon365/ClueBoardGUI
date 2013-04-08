@@ -599,7 +599,7 @@ public class Board extends JPanel {
 			cell.draw(g, this, width, height);
 		}
 		
-		if(humanTurn) {
+		if(humanTurn && game.getPlayers().contains(game.getHuman())) {
 			for(BoardCell c : this.getTargets()) {
 				int leftCoord = c.getCellColumn()*width;
 				int topCoord = c.getCellRow()*height;

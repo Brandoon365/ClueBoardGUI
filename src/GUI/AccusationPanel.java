@@ -21,6 +21,7 @@ public class AccusationPanel extends JFrame{
 	private JComboBox personGuess, roomGuess, weaponGuess;
 	private JButton submit, cancel;
 	private JLabel roomL,weaponL,personL;
+	private ClueGame game;
 	
 	private JComboBox createPersonGuess() {
 		personGuess = new JComboBox();
@@ -60,7 +61,8 @@ public class AccusationPanel extends JFrame{
 		return weaponGuess;
 	}
 	
-	public AccusationPanel(){
+	public AccusationPanel(ClueGame game){
+		this.game = game;
 		setSize(new Dimension(300, 200));
 		setTitle("Make an accusation");
 		personL = new JLabel("Person");
@@ -103,7 +105,16 @@ public class AccusationPanel extends JFrame{
 			person = (String) personGuess.getSelectedItem();
 			weapon = (String) weaponGuess.getSelectedItem();
 			room = (String) roomGuess.getSelectedItem();
-			System.out.println(person + "  " + weapon + "  " + room);
+			Solution accusation = new Solution(person, weapon, room);
+			if(game.checkAccusation(accusation)) {
+				game.setGameDone(true);
+				game.showWinScreen();
+			}
+			else {
+				game.getPlayers().remove(game.getCurrentPlayer());
+				game.setTurnDone(true);
+			}
+			game.getBoard().repaint();
 			setVisible(false);
 		
 		}
