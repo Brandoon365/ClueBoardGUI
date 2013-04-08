@@ -23,9 +23,9 @@ public class WeaponGuessPanel extends JPanel{
 		weaponGuess.addItem("Revolver");
 		weaponGuess.addItem("Wrench");
 		weaponGuess.addItem("Rope");
-		
 		return weaponGuess;
 	}
+	
 	public WeaponGuessPanel(){
 		weaponPanel = new JPanel();
 		this.add(weaponPanel);

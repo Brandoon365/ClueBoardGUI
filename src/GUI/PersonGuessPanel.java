@@ -25,7 +25,7 @@ public class PersonGuessPanel extends JPanel {
 		personGuess.addItem("Professor Plum");
 		return personGuess;
 	}
-
+	
 	public PersonGuessPanel() {
 		guess = new JPanel();
 		this.setBorder(new TitledBorder(new EtchedBorder(), "Person Guess"));

@@ -19,6 +19,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import clueBoard.ClueGame;
+import GUI.*;
 
 
 public class ControlPanel extends JPanel{
@@ -26,6 +27,7 @@ public class ControlPanel extends JPanel{
 	private JButton nextPlayer, accusation;
 	private JLabel turn, turnValue, dice, guess, response, diceValue, guessValue, responseValue;
 	private ClueGame game;
+	private AccusationPanel accPanel;
 	
 
 	public ControlPanel(ClueGame game){
@@ -40,6 +42,7 @@ public class ControlPanel extends JPanel{
 		nextPlayer = new JButton("Next player");
 		nextPlayer.addActionListener(new ButtonListener());
 		accusation = new JButton("Make an acusation");
+		accusation.addActionListener(new makeAccusationListener());
 		diceValue = new JLabel();
 		guessValue = new JLabel();
 		responseValue = new JLabel();
@@ -108,6 +111,15 @@ public class ControlPanel extends JPanel{
 		}
 	}
 		
+	private class  makeAccusationListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			accPanel = new AccusationPanel();
+			accPanel.setVisible(true);
+		}
+	}
+	
 	
 	public void setRoll(int roll){
 		this.diceValue.setText(Integer.toString(roll));
