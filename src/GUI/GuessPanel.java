@@ -50,7 +50,7 @@ public class GuessPanel extends JDialog{
 	public GuessPanel(ClueGame game){
 		this.game = game;
 		setSize(new Dimension(300, 200));
-		setTitle("Make an accusation");
+		setTitle("Make a suggestion");
 		personL = new JLabel("Person");
 		weaponL = new JLabel("Weapon");
 		roomL = new JLabel("Room");
@@ -99,9 +99,9 @@ public class GuessPanel extends JDialog{
 			weapon = (String) weaponGuess.getSelectedItem();
 			room = (game.getHuman().getCurrentRoom());
 			Solution accusation = new Solution(person, weapon, room);
-			if(game.handleSuggestion(accusation)!= null){
-				disproveCard = (game.handleSuggestion(accusation));
-			}
+			System.out.println("1");
+			disproveCard = (game.handleSuggestion(accusation));
+			System.out.println("2");
 			game.getControlPanel().setGuess(accusation);
 			game.getControlPanel().setRevealed(disproveCard);
 			if(disproveCard != null){

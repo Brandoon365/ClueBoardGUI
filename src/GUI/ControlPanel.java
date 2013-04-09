@@ -27,7 +27,8 @@ import GUI.*;
 public class ControlPanel extends JPanel{
 	private JPanel turnPanel, dicePanel, guessPanel, responsePanel, topPanel, botPanel;
 	private JButton nextPlayer, accusation;
-	private JLabel turn, turnValue, dice, guess, response, diceValue, guessValue, responseValue;
+	private JLabel turn, dice, guess, response;
+	private JTextField turnValue, diceValue, responseValue, guessValue;
 	private ClueGame game;
 	private AccusationPanel accPanel;
 	
@@ -45,10 +46,14 @@ public class ControlPanel extends JPanel{
 		nextPlayer.addActionListener(new ButtonListener());
 		accusation = new JButton("Make an accusation");
 		accusation.addActionListener(new ButtonListener());
-		diceValue = new JLabel();
-		guessValue = new JLabel();
-		responseValue = new JLabel();
-		turnValue = new JLabel();
+		diceValue = new JTextField(1);
+		diceValue.setEditable(false);
+		guessValue = new JTextField(30);
+		guessValue.setEditable(false);
+		responseValue = new JTextField(15);
+		responseValue.setEditable(false);
+		turnValue = new JTextField(15);
+		turnValue.setEditable(false);
 		dicePanel = new JPanel();
 		guessPanel = new JPanel();
 		responsePanel = new JPanel();

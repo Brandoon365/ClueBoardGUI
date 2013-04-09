@@ -126,8 +126,7 @@ public class ClueGame extends JFrame{
 		if(currentPlayer == human) {
 			this.setTurnDone(false);
 			Board.setHumanTurn(true);
-			Board.repaint();
-				
+			Board.repaint();			
 		}
 		//take computer turn
 		else {
@@ -256,24 +255,21 @@ public class ClueGame extends JFrame{
 	}
 	
 	public Card handleSuggestion(Solution suggestion){
-		ArrayList<Player> players = new ArrayList<Player>();
 		ArrayList<Card> clues = new ArrayList<Card>();
-		if(currentPlayer != human)
-			players.add(human);
-		for(ComputerPlayer c : computer) {
-			if(currentPlayer != c)
-				players.add(c);
-		}
 		Random roller = new Random();
-
-		while(!players.isEmpty()) {
-			int disproverIndex = roller.nextInt(players.size());
-			Player disprover = players.get(disproverIndex);
-			clues.add(disprover.disproveSuggestion(suggestion));
-			players.remove(disprover);
+		
+		for(Player player : players) {
+			if(players.get(currentPlayerIndex) == player) {
+			}
+			else {
+				if(player.disproveSuggestion(suggestion) == null) {
+					
+				}
+				else {
+					clues.add(player.disproveSuggestion(suggestion));
+				}
+			}
 		}
-		
-		
 		if(clues.size() == 0)
 			return null;
 		else {
@@ -281,6 +277,7 @@ public class ClueGame extends JFrame{
 			return clues.get(cardIndex);
 		}
 	}
+		
 	
 	public boolean checkAccusation(Solution solution){
 		boolean correct = false;

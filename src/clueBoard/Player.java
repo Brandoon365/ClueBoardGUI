@@ -26,32 +26,31 @@ public abstract class Player {
 	}
 	
 	public void updateLastVisited(char initial) {
-		lastVistedRoom = currentRoom;
-		currentRoom = initial;
+		if(currentRoom == 'W')
+			currentRoom = initial;
+		else {
+			lastVistedRoom = currentRoom;
+			currentRoom = initial;
+		}
 	}
 
 	public Card disproveSuggestion(Solution suggestion){
 
 		Random rand = new Random();
 		ArrayList<Card> hand = new ArrayList<Card>();
-		hand = cards;
-		//for(Card c: hand)
-			//System.out.println(c.getCard());
-		
+		Card returned = null;
+		hand = cards;	
 		while (!hand.isEmpty())
 		{
 			int j = rand.nextInt(hand.size());
-			if(suggestion.getWeapon().equals(hand.get(j).getCard()))
-				return hand.get(j);
-			else if(suggestion.getPerson().equals(hand.get(j).getCard()))
-					return hand.get(j);
-			else if(suggestion.getRoom().equals(hand.get(j).getCard()))
-					return hand.get(j);
+			if(suggestion.getWeapon().equals(hand.get(j).getCard()) || suggestion.getPerson().equals(hand.get(j).getCard()) || suggestion.getRoom().equals(hand.get(j).getCard())) {
+				returned = hand.get(j);
+				break;
+			}
 			else
 					hand.remove(j);
 		}
-		return null;
-
+		return returned;
 	}
 	
 	public void acceptCard(Card card) {
@@ -95,37 +94,41 @@ public abstract class Player {
 	public String getCurrentRoom(){
 		String room;
 		switch(this.currentRoom) {
+		case 'W' :
+			room = "Walkway";
+			break;
 		case 'C' :
 			room = "Conservatory";
-			return room;
+			break;
 		case 'K' :
 			room = "Kitchen";
-			return room;
+			break;
 		case 'B' :
 			room = "Ballroom";
-			return room;
+			break;
 		case 'R' :
 			room = "Billiard Room";
-			return room;
+			break;
 		case 'L' :
 			room = "Library";
-			return room;
+			break;
 		case 's' :
 			room = "Study";
-			return room;
+			break;
 		case 'D' :
 			room = "Dining Room";
-			return room;
+			break;
 		case 'O' :
 			room = "Lounge";
-			return room;
+			break;
 		case 'H' :
 			room = "Hall";
-			return room;
+			break;
 		default :
 			room = null;
-			return room;
+			break;
 		}
+		return room;
 	}
 
 
