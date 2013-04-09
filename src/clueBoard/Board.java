@@ -303,7 +303,6 @@ public class Board extends JPanel {
                 cells.get(indexTracker).setCellColumn(col);
                 indexTracker++;
             }
-            
 		}
 		
 		//Populates the the visited list to be false for all cells
@@ -554,6 +553,9 @@ public class Board extends JPanel {
 	 * calcTargets() 	- sets up variables and data for the recursive call to calcTargetsRec()
 	 *****************************************************************************************************************/
 	public void calcTargets(int row, int column, int steps) {
+		for(int i = 0; i < visited.size(); i++) {
+			visited.set(i, false);
+		}
 		targets = new HashSet<BoardCell>();
 		int index = calcIndex(row, column);
 		visited.set(index, true);

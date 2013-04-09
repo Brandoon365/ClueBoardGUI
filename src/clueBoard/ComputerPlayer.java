@@ -44,9 +44,15 @@ public class ComputerPlayer extends Player{
 		}
 		
 		if(doors.size() == 0) {
-			int index = roller.nextInt(nonDoors.size());
-			targetCell = nonDoors.get(index);
-			updateLastVisited('W');
+			if(nonDoors.size() > 1) {
+				int index = roller.nextInt(nonDoors.size());
+				targetCell = nonDoors.get(index);
+				updateLastVisited('W');
+			}
+			else {
+				targetCell = nonDoors.get(0);
+				updateLastVisited('W');
+			}
 		}
 		
 		return targetCell;
