@@ -63,7 +63,7 @@ public class ControlPanel extends JPanel{
 		this.add(topPanel,BorderLayout.CENTER);
 		this.add(botPanel,BorderLayout.SOUTH);
 		topPanel.setLayout(new GridLayout(1,3));
-		botPanel.setLayout(new GridLayout(1,3));
+		//botPanel.setLayout(new GridLayout(1,3));
 		turnPanel.add(turn);
 		turnPanel.add(turnValue);
 		turnValue.setBorder(new TitledBorder(new EtchedBorder()));
@@ -78,19 +78,19 @@ public class ControlPanel extends JPanel{
 		diceValue.setText("    ");
 		dicePanel.add(diceValue);
 		diceValue.setBorder(new EtchedBorder());
-		botPanel.add(dicePanel);
+		botPanel.add(dicePanel, BorderLayout.WEST);
 	
 		guessPanel.add(guess);
 		guessValue.setText("                                     ");
 		guessPanel.add(guessValue);
 		guessValue.setBorder(new EtchedBorder());
-		botPanel.add(guessPanel);
+		botPanel.add(guessPanel, BorderLayout.CENTER);
 		
 		responsePanel.add(response);
 		responseValue.setText("                            ");
 		responsePanel.add(responseValue);
 		responseValue.setBorder(new EtchedBorder());
-		botPanel.add(responsePanel);
+		botPanel.add(responsePanel, BorderLayout.EAST);
 
 	}
 	

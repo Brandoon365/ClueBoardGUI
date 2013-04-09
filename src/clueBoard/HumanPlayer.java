@@ -14,9 +14,9 @@ public class HumanPlayer extends Player{
 		super();
 	}
 	
-	public void updateSeen(Card seen){
+	/*public void updateSeen(Card seen){
 		this.seen.add(seen);
-	}
+	}*/
 
 	@Override
 	void makeMove(Set<BoardCell> targets, Board board) {

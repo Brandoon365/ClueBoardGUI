@@ -7,13 +7,16 @@ import java.util.Set;
 
 //Naomi and Brandon
 public class ComputerPlayer extends Player{
+	private boolean lastDisproved;
 	
 	public ComputerPlayer(String name, java.awt.Point location, java.awt.Color color) {
 		super(name, location, color);
+		setLastDisproved(true);
 	}
 	
 	public ComputerPlayer() {
 		super();
+		setLastDisproved(true);
 	}
 	
 	public BoardCell pickLocation(Set<BoardCell> target){
@@ -65,7 +68,7 @@ public class ComputerPlayer extends Player{
 		
 		//set notSeen
 		for(Card c : ClueGame.getFullDeck()) {
-			if(!seen.contains(c))
+			if(!seen.contains(c) && !cards.contains(c))
 				notSeen.add(c);
 		}
 		
@@ -122,9 +125,9 @@ public class ComputerPlayer extends Player{
 		return guess;
 	}
 	
-	public void updateSeen(Card seen){
+	/*public void updateSeen(Card seen){
 		this.seen.add(seen);
-	}
+	}*/
 
 	public char getLastVistedRoom() {
 		return lastVistedRoom;
@@ -141,5 +144,13 @@ public class ComputerPlayer extends Player{
 		Point playerLocation = new Point(location.getCellColumn(),location.getCellRow());
 		setLocation(playerLocation);
 		board.repaint();
+	}
+
+	public boolean isLastDisproved() {
+		return lastDisproved;
+	}
+
+	public void setLastDisproved(boolean lastDisproved) {
+		this.lastDisproved = lastDisproved;
 	}
 }

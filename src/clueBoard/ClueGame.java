@@ -118,6 +118,10 @@ public class ClueGame extends JFrame{
 			JOptionPane.showMessageDialog(this, "Sorry, " + currentPlayer.getName() + " won the game.");
 	}
 	
+	public void showIncorrectScreen() {
+		JOptionPane.showMessageDialog(this, "Sorry, that is incorrect.");
+	}
+	
 	
 	public void takeTurn(int roll) {
 		//calculate targets
@@ -133,7 +137,19 @@ public class ClueGame extends JFrame{
 			setTurnDone(true);
 			currentPlayer.makeMove(Board.getTargets(), Board);
 			//Code to make computer make suggestion if in a room
-		
+			if(!currentPlayer.getCurrentRoom().equals("Walkway") && ((ComputerPlayer) currentPlayer).isLastDisproved()) {
+				Solution guess = ((ComputerPlayer) currentPlayer).createSuggestion();
+				Card returned = handleSuggestion(guess);
+				if(returned == null)
+					((ComputerPlayer) currentPlayer).setLastDisproved(false);
+				controlPanel.setGuess(guess);
+				controlPanel.setRevealed(returned);	
+			}
+			else if(!currentPlayer.getCurrentRoom().equals("Walkway")) {
+				Solution guess = ((ComputerPlayer) currentPlayer).createSuggestion();
+				JOptionPane.showMessageDialog(this, currentPlayer.getName() + " has made an accusation of " + guess.getPerson() + " in the " + guess.getRoom() + " with the " + guess.getWeapon());
+				checkAccusation(guess);
+			}
 		
 		
 		}
@@ -259,21 +275,22 @@ public class ClueGame extends JFrame{
 		Random roller = new Random();
 		
 		for(Player player : players) {
+			if(player.getName() == suggestion.getPerson())
+				player.setLocation(currentPlayer.getLocation());
 			if(players.get(currentPlayerIndex) == player) {
 			}
 			else {
-				if(player.disproveSuggestion(suggestion) == null) {
-					
-				}
-				else {
+				if(player.disproveSuggestion(suggestion) != null) {
 					clues.add(player.disproveSuggestion(suggestion));
 				}
 			}
 		}
+		
 		if(clues.size() == 0)
 			return null;
 		else {
 			int cardIndex = roller.nextInt(clues.size());
+			ComputerPlayer.updateSeen(clues.get(cardIndex));
 			return clues.get(cardIndex);
 		}
 	}

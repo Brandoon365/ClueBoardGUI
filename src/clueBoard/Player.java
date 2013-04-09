@@ -7,7 +7,7 @@ import java.util.Set;
 public abstract class Player {
 	private String name;
 	public static ArrayList<Card> seen = new ArrayList<Card>();
-	private ArrayList<Card> cards = new ArrayList<Card>();
+	protected ArrayList<Card> cards = new ArrayList<Card>();
 	private java.awt.Point location;
 	private java.awt.Color color;
 	protected char lastVistedRoom;
@@ -39,7 +39,8 @@ public abstract class Player {
 		Random rand = new Random();
 		ArrayList<Card> hand = new ArrayList<Card>();
 		Card returned = null;
-		hand = cards;	
+		for(Card c : cards)
+			hand.add(c);
 		while (!hand.isEmpty())
 		{
 			int j = rand.nextInt(hand.size());
@@ -48,14 +49,14 @@ public abstract class Player {
 				break;
 			}
 			else
-					hand.remove(j);
+				hand.remove(j);
 		}
 		return returned;
 	}
 	
 	public void acceptCard(Card card) {
 		cards.add(card);
-		seen.add(card);
+		//seen.add(card);
 	}
 	
 	abstract void makeMove(Set<BoardCell> targets, Board board);
@@ -112,7 +113,7 @@ public abstract class Player {
 		case 'L' :
 			room = "Library";
 			break;
-		case 's' :
+		case 'S' :
 			room = "Study";
 			break;
 		case 'D' :
@@ -131,6 +132,9 @@ public abstract class Player {
 		return room;
 	}
 
+	public static void updateSeen(Card toAdd) {
+		seen.add(toAdd);
+	}
 
 	public void setLastVistedRoom(char lastVistedRoom) {
 		this.lastVistedRoom = lastVistedRoom;

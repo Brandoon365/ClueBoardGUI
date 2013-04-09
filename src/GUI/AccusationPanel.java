@@ -111,12 +111,12 @@ public class AccusationPanel extends JFrame{
 				game.showWinScreen();
 			}
 			else {
+				game.showIncorrectScreen();
 				game.setTurnDone(true);
 				game.getHuman().setMadeAccusation(true);
 			}
 			game.getBoard().repaint();
-			setVisible(false);
-		
+			setVisible(false);		
 		}
 	}
 	
