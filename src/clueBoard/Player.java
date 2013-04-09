@@ -87,6 +87,42 @@ public abstract class Player {
 	public char getLastVistedRoom() {
 		return lastVistedRoom;
 	}
+	
+	public String getCurrentRoom(){
+		String room;
+		switch(this.currentRoom) {
+		case 'C' :
+			room = "Conservatory";
+			return room;
+		case 'K' :
+			room = "Kitchen";
+			return room;
+		case 'B' :
+			room = "Ballroom";
+			return room;
+		case 'R' :
+			room = "Billiard Room";
+			return room;
+		case 'L' :
+			room = "Library";
+			return room;
+		case 's' :
+			room = "Study";
+			return room;
+		case 'D' :
+			room = "Dining Room";
+			return room;
+		case 'O' :
+			room = "Lounge";
+			return room;
+		case 'H' :
+			room = "Hall";
+			return room;
+		default :
+			room = null;
+			return room;
+		}
+	}
 
 
 	public void setLastVistedRoom(char lastVistedRoom) {
