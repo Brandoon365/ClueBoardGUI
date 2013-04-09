@@ -130,6 +130,10 @@ public class ClueGame extends JFrame{
 		else {
 			setTurnDone(true);
 			currentPlayer.makeMove(Board.getTargets(), Board);
+			//Code to make computer make suggestion if in a room
+		
+		
+		
 		}
 		//Board.setHumanTurn(false);
 	}
@@ -493,6 +497,10 @@ public class ClueGame extends JFrame{
 
 	public void setBoard(Board board) {
 		Board = board;
+	}
+	
+	public ControlPanel getControlPanel() {
+		return this.controlPanel;
 	}
 
 }

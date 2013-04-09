@@ -112,6 +112,7 @@ public class AccusationPanel extends JFrame{
 			}
 			else {
 				game.setTurnDone(true);
+				game.getHuman().setMadeAccusation(true);
 			}
 			game.getBoard().repaint();
 			setVisible(false);

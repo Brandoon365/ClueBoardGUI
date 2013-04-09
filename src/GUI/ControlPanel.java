@@ -18,7 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import clueBoard.Card;
 import clueBoard.ClueGame;
+import clueBoard.Solution;
 import GUI.*;
 
 
@@ -99,6 +101,7 @@ public class ControlPanel extends JPanel{
 						game.setCurrentPlayerIndex(game.getCurrentPlayerIndex() + 1);
 					setCurrentPlayer(game.getPlayers().get(game.getCurrentPlayerIndex()).getName());
 					game.setCurrentPlayer(game.getPlayers().get(game.getCurrentPlayerIndex()));
+					game.getHuman().setMadeAccusation(false);
 					int roll = ClueGame.roll();
 					setRoll(roll);
 					game.setTurnDone(false);
@@ -113,12 +116,8 @@ public class ControlPanel extends JPanel{
 					accPanel = new AccusationPanel(game);
 					accPanel.setVisible(true);
 				}
-				else if(game.getPlayers().contains(game.getHuman())) {
-					JOptionPane.showMessageDialog(null,"You cannot make an accusation at this time.", "You cannot make an accusation at this time.", JOptionPane.ERROR_MESSAGE);
-				}
 				else {
-					JOptionPane.showMessageDialog(null,"You are already out of the game.", "You are already out of the game.", JOptionPane.ERROR_MESSAGE);
-
+					JOptionPane.showMessageDialog(null,"You cannot make an accusation at this time.", "You cannot make an accusation at this time.", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -132,6 +131,17 @@ public class ControlPanel extends JPanel{
 	
 	public void setCurrentPlayer(String name) {
 		turnValue.setText(name);
+	}
+	
+	public void setGuess(Solution guess) {
+		guessValue.setText(guess.getPerson() + " in the " + guess.getRoom() + " with the " + guess.getWeapon());
+	}
+	
+	public void setRevealed(Card card) {
+		if(card == null)
+			responseValue.setText("No new Clue");
+		else
+			responseValue.setText(card.getCard());
 	}
 	
 	public static void main(String[] args) {

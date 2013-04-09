@@ -126,7 +126,7 @@ public class Board extends JPanel {
 	}
 
 	public void checkLocation(Point location) {
-		if(humanTurn) {
+		if(humanTurn && !game.getHuman().isMadeAccusation()) {
 			int width = this.getWidth()/this.getNumColumns();
 			int height = this.getHeight()/this.getNumRows();
 			int row = (int) (location.getY()/height);
@@ -599,7 +599,7 @@ public class Board extends JPanel {
 			cell.draw(g, this, width, height);
 		}
 		
-		if(humanTurn && game.getPlayers().contains(game.getHuman())) {
+		if(humanTurn && !game.getHuman().isMadeAccusation()) {
 			for(BoardCell c : this.getTargets()) {
 				int leftCoord = c.getCellColumn()*width;
 				int topCoord = c.getCellRow()*height;
