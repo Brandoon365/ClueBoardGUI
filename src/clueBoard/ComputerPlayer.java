@@ -7,7 +7,6 @@ import java.util.Set;
 
 //Naomi and Brandon
 public class ComputerPlayer extends Player{
-	private char lastVistedRoom;
 	
 	public ComputerPlayer(String name, java.awt.Point location, java.awt.Color color) {
 		super(name, location, color);
@@ -47,11 +46,11 @@ public class ComputerPlayer extends Player{
 			if(nonDoors.size() > 1) {
 				int index = roller.nextInt(nonDoors.size());
 				targetCell = nonDoors.get(index);
-				updateLastVisited('W');
+				updateCurrent('W');
 			}
 			else {
 				targetCell = nonDoors.get(0);
-				updateLastVisited('W');
+				updateCurrent('W');
 			}
 		}
 		

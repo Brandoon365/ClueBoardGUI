@@ -99,9 +99,7 @@ public class GuessPanel extends JDialog{
 			weapon = (String) weaponGuess.getSelectedItem();
 			room = (game.getHuman().getCurrentRoom());
 			Solution accusation = new Solution(person, weapon, room);
-			System.out.println("1");
 			disproveCard = (game.handleSuggestion(accusation));
-			System.out.println("2");
 			game.getControlPanel().setGuess(accusation);
 			game.getControlPanel().setRevealed(disproveCard);
 			if(disproveCard != null){

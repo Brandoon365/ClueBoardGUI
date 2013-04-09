@@ -138,7 +138,7 @@ public class Board extends JPanel {
 				if(row == c.getCellRow() && column == c.getCellColumn()) {
 					validTarget = true;
 					if(c.isWalkway())
-						game.getHuman().updateLastVisited('W');
+						game.getHuman().updateCurrent('W');
 					else
 						game.getHuman().updateLastVisited(((RoomCell) c).getRoomInitial());
 				}
@@ -602,7 +602,7 @@ public class Board extends JPanel {
 	}
 	
 	//Draw each cell of the board and the players
-	@Override
+	/*@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		int width = this.getWidth()/this.getNumColumns();
@@ -637,7 +637,86 @@ public class Board extends JPanel {
 			g.setColor(Color.black);
 			g.drawOval(centerX, centerY, width, height);
 		}
-	}
+	}*/
+	@Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        int width = this.getWidth() / this.getNumColumns();
+        int height = this.getHeight() / this.getNumRows();
+        ArrayList<Player> tempPlayer = new ArrayList<Player>(this.getPlayers());
+        ArrayList<Player> sameLocPlayers = new ArrayList<Player>();
+        for (BoardCell cell : this.getCells()) {
+            cell.draw(g, this, width, height);
+        }
+        if (humanTurn && !game.getHuman().isMadeAccusation()) {
+            for (BoardCell c : this.getTargets()) {
+                int leftCoord = c.getCellColumn() * width;
+                int topCoord = c.getCellRow() * height;
+                g.setColor(Color.cyan);
+                g.fillRect(leftCoord, topCoord, width, height);
+                g.setColor(Color.black);
+                g.drawRect(leftCoord, topCoord, width, height);
+            }
+        }
+
+        // Creates new array to draw players on same square
+        for (int i = 0; i < (tempPlayer.size()); i++) {
+            for (int j = 0; j < (tempPlayer.size()); j++) {
+                if (tempPlayer.get(i).getLocation().equals(tempPlayer.get(j).getLocation()) && (tempPlayer.get(i).getName() != tempPlayer.get(j).getName()) && !sameLocPlayers.contains(tempPlayer.get(j))) {
+                        sameLocPlayers.add(tempPlayer.get(j));
+                }
+            }
+        }
+        //removes the players on the same square from main repaint
+        for(int i=0; i < sameLocPlayers.size();i++){
+            for(int j=0; j < tempPlayer.size();j++){
+            if(sameLocPlayers.get(i).getName().equals(tempPlayer.get(j).getName())){
+                tempPlayer.remove(j);
+            }
+        }
+        }
+        
+        int player = 1;
+        if(sameLocPlayers.size()!= 0){
+        int angle = (360 / sameLocPlayers.size());
+        int modAngle = 0;
+        for (Player p : sameLocPlayers) {
+            g.setColor(p.getColor());
+            int radius = 0;
+            if (width > height)
+                radius = height;
+            else
+                radius = width;
+            int centerX = (int) p.getLocation().getX() * width;
+            int centerY = (int) p.getLocation().getY() * height;
+            if (player == 1) {
+                g.fillArc(centerX, centerY, width, height, 0,angle);
+                g.setColor(Color.black);
+                g.drawArc(centerX, centerY, width, height, 0,angle);
+                player++;
+            } else {
+                g.fillArc(centerX, centerY, width, height, angle + modAngle,angle);
+                g.setColor(Color.black);
+                g.drawArc(centerX, centerY, width, height, angle + modAngle,angle);
+                player++;
+                modAngle = modAngle + angle;
+            }
+        }
+        }
+        for (Player p : tempPlayer) {
+            g.setColor(p.getColor());
+            int radius = 0;
+            if (width > height)
+                radius = height;
+            else
+                radius = width;
+            int centerX = (int) p.getLocation().getX() * width;
+            int centerY = (int) p.getLocation().getY() * height;
+            g.fillOval(centerX, centerY, width, height);
+            g.setColor(Color.black);
+            g.drawOval(centerX, centerY, width, height);
+        }
+    }
 	
 	
 

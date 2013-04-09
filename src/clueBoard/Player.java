@@ -26,12 +26,12 @@ public abstract class Player {
 	}
 	
 	public void updateLastVisited(char initial) {
-		if(currentRoom == 'W')
-			currentRoom = initial;
-		else {
-			lastVistedRoom = currentRoom;
-			currentRoom = initial;
-		}
+		currentRoom = initial;
+		lastVistedRoom = initial;
+	}
+	
+	public void updateCurrent(char initial) {
+		currentRoom = initial;
 	}
 
 	public Card disproveSuggestion(Solution suggestion){

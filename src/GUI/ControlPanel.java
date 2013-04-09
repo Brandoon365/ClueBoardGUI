@@ -117,7 +117,7 @@ public class ControlPanel extends JPanel{
 				}
 			}
 			else if(e.getSource() == accusation) {
-				if(game.getCurrentPlayer() == game.getHuman() && game.getPlayers().contains(game.getHuman()) && !game.getHuman().isMadeAccusation()) {
+				if(game.getCurrentPlayer() == game.getHuman() && game.getPlayers().contains(game.getHuman()) && !game.getHuman().isMadeAccusation() && !game.turnDone) {
 					accPanel = new AccusationPanel(game);
 					accPanel.setVisible(true);
 				}
