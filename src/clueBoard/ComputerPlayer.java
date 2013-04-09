@@ -36,6 +36,7 @@ public class ComputerPlayer extends Player{
 			targetCell = doors.get(index);
 			RoomCell cell = (RoomCell) targetCell;
 			if(cell.getRoomInitial() != lastVistedRoom) {
+				updateLastVisited(cell.getRoomInitial());
 				return targetCell;
 			}
 			else 
@@ -45,19 +46,9 @@ public class ComputerPlayer extends Player{
 		if(doors.size() == 0) {
 			int index = roller.nextInt(nonDoors.size());
 			targetCell = nonDoors.get(index);
-		}
-		//update current and last visited room
-		/*if(currentRoom != 'W') {
-			lastVistedRoom = currentRoom;
+			updateLastVisited('W');
 		}
 		
-		if(targetCell.isWalkway()) {
-			currentRoom = 'W';
-		}
-		else if(targetCell.isDoorway()){
-			RoomCell doorway = (RoomCell) targetCell;
-			currentRoom = doorway.getRoomInitial();
-		}*/
 		return targetCell;
 	}
 	

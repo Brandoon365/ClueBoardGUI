@@ -10,7 +10,7 @@ public abstract class Player {
 	private ArrayList<Card> cards = new ArrayList<Card>();
 	private java.awt.Point location;
 	private java.awt.Color color;
-	private char lastVistedRoom;
+	protected char lastVistedRoom;
 	protected char currentRoom;
 	
 	public Player() {
@@ -25,6 +25,10 @@ public abstract class Player {
 		this.color = color;
 	}
 	
+	public void updateLastVisited(char initial) {
+		lastVistedRoom = currentRoom;
+		currentRoom = initial;
+	}
 
 	public Card disproveSuggestion(Solution suggestion){
 

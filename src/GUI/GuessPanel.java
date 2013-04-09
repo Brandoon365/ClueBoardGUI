@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import clueBoard.*;
 
-public class GuessPanel extends JFrame{
+public class GuessPanel extends JDialog{
 	private JPanel person,weapon,room,frame,plabel,wlabel,rlabel, submitP, main; 
 	private JComboBox personGuess, weaponGuess;
 	private JButton submit, cancel;

@@ -18,6 +18,8 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import GUI.GuessPanel;
+
 import clueBoard.RoomCell.DoorDirection;
 
 public class Board extends JPanel {
@@ -133,8 +135,13 @@ public class Board extends JPanel {
 			int column = (int) (location.getX()/width);
 			boolean validTarget = false;
 			for(BoardCell c : this.getTargets()) {
-				if(row == c.getCellRow() && column == c.getCellColumn())
-					validTarget = true;			
+				if(row == c.getCellRow() && column == c.getCellColumn()) {
+					validTarget = true;
+					if(c.isWalkway())
+						game.getHuman().updateLastVisited('W');
+					else
+						game.getHuman().updateLastVisited(((RoomCell) c).getRoomInitial());
+				}
 			}
 			if(validTarget) {
 				target = new Point(column, row);
@@ -142,6 +149,10 @@ public class Board extends JPanel {
 				humanTurn = false;
 				repaint();
 				game.setTurnDone(true);
+				if(!game.getHuman().getCurrentRoom().equals("Walkway")) {
+					game.setGuess(new GuessPanel(game));
+					game.getGuess().setVisible(true);
+				}
 			}
 				
 			else

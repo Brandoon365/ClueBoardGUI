@@ -95,7 +95,7 @@ public class ControlPanel extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == nextPlayer) {
 				if(game.turnDone && !game.isGameDone()) {
-					if(game.getCurrentPlayerIndex() == game.getPlayers().size())
+					if(game.getCurrentPlayerIndex() + 1 == game.getPlayers().size())
 						game.setCurrentPlayerIndex(0);
 					else
 						game.setCurrentPlayerIndex(game.getCurrentPlayerIndex() + 1);

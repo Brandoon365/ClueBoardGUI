@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import GUI.CardPanel;
 import GUI.ControlPanel;
 import GUI.DetectiveNotes;
+import GUI.GuessPanel;
 
 public class ClueGame extends JFrame{
 	public ArrayList<Player> players;
@@ -46,6 +47,7 @@ public class ClueGame extends JFrame{
 	private ControlPanel controlPanel;
 	private CardPanel cardPanel;
 	public boolean turnDone, gameDone;
+	private GuessPanel guess;
 	
 	public ClueGame() {
 		turnDone = true;
@@ -125,6 +127,7 @@ public class ClueGame extends JFrame{
 			this.setTurnDone(false);
 			Board.setHumanTurn(true);
 			Board.repaint();
+				
 		}
 		//take computer turn
 		else {
@@ -503,4 +506,11 @@ public class ClueGame extends JFrame{
 		return this.controlPanel;
 	}
 
+	public GuessPanel getGuess() {
+		return this.guess;
+	}
+	
+	public void setGuess(GuessPanel guess) {
+		this.guess = guess;
+	}
 }
