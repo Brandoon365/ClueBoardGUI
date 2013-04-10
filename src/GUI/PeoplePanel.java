@@ -28,7 +28,7 @@ public class PeoplePanel extends JPanel {
 		
 		scarletBox = new JCheckBox("Miss Scarlet");
 		mustardBox = new JCheckBox("Colonel Mustard");
-		greenBox = new JCheckBox("Mr. Green");
+		greenBox = new JCheckBox("Reverend Green");
 		whiteBox = new JCheckBox("Mrs. White");
 		peacockBox = new JCheckBox("Mrs. Peacock");
 		plumBox = new JCheckBox("Professor Plum");
