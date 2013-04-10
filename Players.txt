@@ -1,4 +1,4 @@
-Miss Scarlett,8,0,red
+Miss Scarlet,8,0,red
 Colonel Mustard,18,0,yellow
 Mrs. White,0,7,white
 Reverend Green,7,24,green
