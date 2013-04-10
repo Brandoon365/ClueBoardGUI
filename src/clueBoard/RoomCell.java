@@ -1,6 +1,7 @@
 package clueBoard;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class RoomCell extends BoardCell {
@@ -29,7 +30,6 @@ public class RoomCell extends BoardCell {
 		//store the first character as the room initial
 		roomInitial = id.charAt(0);
 		this.printsRoom = false;
-		
 		//if the room is a door, assign the appropriate value to the enum based on the second character of the id
 		if (id.length() == 2) {
 			secondInitial = (id.charAt(1));
@@ -117,15 +117,8 @@ public class RoomCell extends BoardCell {
 	public void draw(Graphics g, Board board, int width, int height) {
 		int leftCoord = this.getCellColumn()*width;
 		int topCoord = this.getCellRow()*height;
-		g.setColor(Color.lightGray);
+		g.setColor(Color.DARK_GRAY);
 		g.fillRect(leftCoord, topCoord, width, height);
-		
-		//prints room name if printsRoom is true
-		if(this.getPrintsRoom()) {
-			String room = board.getRooms().get(this.getRoomInitial());
-			g.setColor(Color.black);
-			g.drawString(room, leftCoord, topCoord);
-		}
 		
 		//if cell has a door, draw a blue line to indicate direction
 		if(this.isDoorway()) {
@@ -148,5 +141,22 @@ public class RoomCell extends BoardCell {
 				break;
 			}
 		}
+	}
+	public void drawName(Graphics g, Board board, int width, int height){
+		int leftCoord = this.getCellColumn()*width;
+		int topCoord = this.getCellRow()*height;
+		if(this.getPrintsRoom() && this.getRoomInitial()!='X') {
+			String room = board.getRooms().get(this.getRoomInitial());
+			Font font = new Font("Verdana", Font.PLAIN, 16);
+			g.setFont(font);
+			g.setColor(Color.white);
+			g.drawString(room, leftCoord, topCoord);
+	}else if(this.getPrintsRoom() && this.getRoomInitial()=='X'){
+		String room = " Clue";
+		Font font = new Font("Dialog", Font.PLAIN, 40);
+		g.setFont(font);
+		g.setColor(Color.white);
+		g.drawString(room, leftCoord, topCoord);
+	}
 	}
 }

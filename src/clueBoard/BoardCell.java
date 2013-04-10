@@ -51,4 +51,10 @@ public abstract class BoardCell {
 	
 	
 	abstract void draw(Graphics g, Board board, int width, int height);
+
+
+	public void drawName(Graphics g, Board board, int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
 }

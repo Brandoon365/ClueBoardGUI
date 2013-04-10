@@ -73,7 +73,6 @@ public class ClueGame extends JFrame{
 		for(ComputerPlayer c : computer)
 			players.add(c);
 		deal();
-
 		cardPanel.setRoomName(human.getCards().get(0).getCard());
 		cardPanel.setWeaponName(human.getCards().get(1).getCard());
 		cardPanel.setPersonName(human.getCards().get(2).getCard());

@@ -9,3 +9,4 @@ O, Lounge
 H, Hall
 X, Closet
 W, Walkway
+Z, Clue

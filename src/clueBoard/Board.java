@@ -2,6 +2,7 @@ package clueBoard;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -610,6 +611,9 @@ public class Board extends JPanel {
 	        Map<Point, ArrayList<Player>> sameLocPlayers = new HashMap<Point, ArrayList<Player>>();
 	        for (BoardCell cell : this.getCells()) {
 	            cell.draw(g, this, width, height);
+	        }
+	        for (BoardCell cell : this.getCells()) {
+	        	cell.drawName(g, this, width, height);
 	        }
 	        //draws targets
 	        if (humanTurn && !game.getHuman().isMadeAccusation()) {
