@@ -148,7 +148,10 @@ public class ClueGame extends JFrame{
 			else if(!currentPlayer.getCurrentRoom().equals("Walkway")) {
 				Solution guess = ((ComputerPlayer) currentPlayer).createSuggestion();
 				JOptionPane.showMessageDialog(this, currentPlayer.getName() + " has made an accusation of " + guess.getPerson() + " in the " + guess.getRoom() + " with the " + guess.getWeapon());
-				checkAccusation(guess);
+				if(checkAccusation(guess)) {
+					showWinScreen();
+					setGameDone(true);
+				}
 			}
 		
 		
