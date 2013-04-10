@@ -28,7 +28,7 @@ public class AccusationPanel extends JFrame{
 		personGuess.setPreferredSize(new Dimension(100,175));
 		personGuess.addItem("Miss Scarlet");
 		personGuess.addItem("Colonel Mustard");
-		personGuess.addItem("Mr. Green");
+		personGuess.addItem("Reverend Green");
 		personGuess.addItem("Mrs. White");
 		personGuess.addItem("Mrs. Peacock");
 		personGuess.addItem("Professor Plum");
