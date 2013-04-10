@@ -275,7 +275,7 @@ public class ClueGame extends JFrame{
 		Random roller = new Random();
 		
 		for(Player player : players) {
-			if(player.getName() == suggestion.getPerson())
+			if(player.getName().equals(suggestion.getPerson()))
 				player.setLocation(currentPlayer.getLocation());
 			if(players.get(currentPlayerIndex) == player) {
 			}
